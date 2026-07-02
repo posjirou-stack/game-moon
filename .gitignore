@@ -1,0 +1,6 @@
+# Ren'Py build/cache artifacts
+renpy/game/cache/
+renpy/game/saves/
+renpy/**/*.rpyc
+renpy/**/*.rpymc
+renpy/log.txt
