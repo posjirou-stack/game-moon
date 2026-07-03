@@ -35,13 +35,16 @@ screen game_hud():
 
                 text "[game_date]　[game_time]" size 22 color "#e8e8f0"
                 text "SAN [san]" size 22 color "#c9e4ff"
+                ## keyboard_focus False: 矢印キーでの選択肢操作がHUDに吸われないようにする
                 textbutton "ステータス":
                     action ShowMenu("status_screen")
                     text_size 22
+                    keyboard_focus False
                 if config.developer:
                     textbutton "デバッグ":
                         action ShowMenu("debug_menu")
                         text_size 22
+                        keyboard_focus False
 
         ## キーボードショートカット(HUD表示中のみ有効)
         key "K_F1" action ShowMenu("status_screen")

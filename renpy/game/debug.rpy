@@ -10,11 +10,23 @@
 ## - エンディング分岐フラグ(F1〜F5・特殊ルート)のON/OFF
 ## - カレンダーの時間送り
 
+default debug_jump_target = None
+
 init python:
 
     def debug_add(var, delta):
         """デバッグ用: ストア変数を無検証で増減する。"""
         setattr(store, var, getattr(store, var) + delta)
+
+    def debug_jump(label):
+        """メニューコンテキストを抜けてから、メインコンテキストでジャンプする。
+
+        画面の Jump アクションを直接使うと、ShowMenu で開いたメニューコンテキストの
+        中で物語が進行してしまい、HUDが消える・エンディング後に元の画面へ戻る等の
+        不整合が起きる。必ずこの関数経由でジャンプすること。
+        """
+        store.debug_jump_target = label
+        renpy.jump_out_of_context("debug_trampoline")
 
     DEBUG_FLAG_LIST = [
         ("flag_f1_moonlens",       "F1 ムーンレンズ奪取"),
@@ -24,6 +36,17 @@ init python:
         ("flag_f5_endo_stopped",   "F5 遠藤 阻止"),
         ("flag_endo_route",        "特殊 遠藤ルート"),
     ]
+
+
+## メインコンテキスト側の踏み台。コールスタックを掃除してから目的地へ跳ぶ
+## (行動選択ループのイベント call 中にジャンプした場合の戻り先残骸を消すため)。
+label debug_trampoline:
+
+    python:
+        while renpy.call_stack_depth() > 0:
+            renpy.pop_call()
+
+    jump expression debug_jump_target
 
 
 screen debug_menu():
@@ -49,21 +72,21 @@ screen debug_menu():
 
             hbox:
                 spacing 8
-                textbutton "1章:夜叉" action Jump("chapter1_izakaya") text_size 20
-                textbutton "1章:新木場" action Jump("chapter1_campus") text_size 20
-                textbutton "1章:遭遇" action Jump("chapter1_encounter") text_size 20
-                textbutton "行動選択" action Jump("calendar_start") text_size 20
-                textbutton "儀式" action Jump("climax_ritual") text_size 20
+                textbutton "1章:夜叉" action Function(debug_jump, "chapter1_izakaya") text_size 20
+                textbutton "1章:新木場" action Function(debug_jump, "chapter1_campus") text_size 20
+                textbutton "1章:遭遇" action Function(debug_jump, "chapter1_encounter") text_size 20
+                textbutton "行動選択" action Function(debug_jump, "calendar_start") text_size 20
+                textbutton "儀式" action Function(debug_jump, "climax_ritual") text_size 20
 
             hbox:
                 spacing 8
-                textbutton "END①" action Jump("ending_01_true") text_size 20
-                textbutton "END②" action Jump("ending_02_good") text_size 20
-                textbutton "END③" action Jump("ending_03_normal") text_size 20
-                textbutton "END④" action Jump("ending_04_limited") text_size 20
-                textbutton "END⑤" action Jump("ending_05_worst") text_size 20
-                textbutton "END⑥" action Jump("ending_06_endo") text_size 20
-                textbutton "END⑦" action Jump("ending_07_early_exit") text_size 20
+                textbutton "END①" action Function(debug_jump, "ending_01_true") text_size 20
+                textbutton "END②" action Function(debug_jump, "ending_02_good") text_size 20
+                textbutton "END③" action Function(debug_jump, "ending_03_normal") text_size 20
+                textbutton "END④" action Function(debug_jump, "ending_04_limited") text_size 20
+                textbutton "END⑤" action Function(debug_jump, "ending_05_worst") text_size 20
+                textbutton "END⑥" action Function(debug_jump, "ending_06_endo") text_size 20
+                textbutton "END⑦" action Function(debug_jump, "ending_07_early_exit") text_size 20
 
             text "◆ スキル・SAN" size 22 color "#ffe08a"
 

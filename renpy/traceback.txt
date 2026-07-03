@@ -1,0 +1,48 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 31, in script
+    menu:
+  File "renpy/common/00action_menu.rpy", line 228, in __call__
+    layout.yesno_screen(layout.QUIT, Quit(False))
+  File "renpy/common/00layout.rpy", line 526, in yesno_screen
+    elif renpy.invoke_in_new_context(layout.invoke_yesno_prompt, None, message):
+  File "renpy/common/00layout.rpy", line 471, in invoke_yesno_prompt
+    rv = layout.yesno_prompt(*args)
+AttributeError: 'Layout' object has no attribute 'yesno_prompt'
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 31, in script
+    menu:
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/ast.py", line 1922, in execute
+    choice = renpy.exports.menu(choices, self.set, args, kwargs, item_arguments)
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/exports.py", line 1106, in menu
+    rv = renpy.store.menu(new_items)
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/exports.py", line 1345, in display_menu
+    rv = renpy.ui.interact(mouse='menu', type=type, roll_forward=roll_forward)
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/display/core.py", line 3582, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/display/core.py", line 4392, in interact_core
+    self.quit_event()
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/display/core.py", line 3195, in quit_event
+    renpy.display.behavior.run(renpy.config.quit_action)
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/display/behavior.py", line 379, in run
+    return action(*args, **kwargs)
+  File "renpy/common/00action_menu.rpy", line 228, in __call__
+    layout.yesno_screen(layout.QUIT, Quit(False))
+  File "renpy/common/00layout.rpy", line 526, in yesno_screen
+    elif renpy.invoke_in_new_context(layout.invoke_yesno_prompt, None, message):
+  File "/tmp/claude-0/-home-user-game-moon/7833875d-3c7c-5a90-a81f-ef8ddf2474fd/scratchpad/renpy-8.1.3-sdk/renpy/game.py", line 287, in invoke_in_new_context
+    return callable(*args, **kwargs)
+  File "renpy/common/00layout.rpy", line 471, in invoke_yesno_prompt
+    rv = layout.yesno_prompt(*args)
+AttributeError: 'Layout' object has no attribute 'yesno_prompt'
+
+Linux-6.18.5-x86_64-with-glibc2.39 x86_64
+Ren'Py 8.1.3.23091805
+月夜が魅せる物語 -Fated Moonlight-（プロトタイプ） 0.2.0-dev
+Fri Jul  3 16:55:20 2026
