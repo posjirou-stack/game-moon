@@ -7,3 +7,11 @@ style default:
 
 style input:
     font "fonts/ipag.ttf"
+
+## HUD・ステータス画面・デバッグメニューのボタン/見出しにも日本語が入るため、
+## 派生スタイル側でも明示的に指定しておく(テーマ側の上書き対策)。
+style button_text:
+    font "fonts/ipag.ttf"
+
+style label_text:
+    font "fonts/ipag.ttf"

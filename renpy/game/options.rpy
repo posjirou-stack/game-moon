@@ -1,10 +1,10 @@
 ## 月夜が魅せる物語 -Fated Moonlight- 基本設定
-## フェーズ1(MVP)用の最小構成。GUIテーマは未導入で、標準スクリーンのまま進める。
+## GUIテーマは未導入で、標準スクリーンのまま進める(テーマ導入はフェーズ3)。
 
 define config.name = _("月夜が魅せる物語 -Fated Moonlight-（プロトタイプ）")
 define gui.show_name = False
 
-define config.version = "0.1.0-mvp"
+define config.version = "0.2.0-dev"
 
 define build.name = "tsukiyo_ga_miseru_monogatari"
 
