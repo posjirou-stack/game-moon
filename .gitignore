@@ -4,3 +4,5 @@ renpy/game/saves/
 renpy/**/*.rpyc
 renpy/**/*.rpymc
 renpy/log.txt
+renpy/traceback.txt
+renpy/errors.txt
