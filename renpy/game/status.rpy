@@ -51,6 +51,11 @@ default sign_known = False          # 印の正体の知識
 default sign_data_1 = False         # 呪文詳細・第1資料(長江ビル/東京教会)
 default sign_data_2 = False         # 呪文詳細・第2資料(遠藤研究所など)
 default sign_research_done = False  # 12時間の解呪研究完了
+default invitation = False          # ナイ牧師「特別な説法」の招待状(12/25夜)
+default personal_sign_removed = False  # 探索者自身の印のみ解除(SIGN-ALT。F4ではない)
+
+## その他の進行変数
+default mizuna_rescued = False      # 瑞名慧を月鏡緑化管理会社の地下から救出したか
 
 ## ENDOチェーン
 default endo_suspect = False     # 「森本蓮司」への疑い

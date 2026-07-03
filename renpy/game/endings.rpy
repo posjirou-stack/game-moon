@@ -83,6 +83,14 @@ label climax_ritual:
 
         "だが[first_person]たちは、この夜のために全てを積み上げてきた。"
 
+        $ allies_count = len(allies)
+
+        if allies_count >= 2:
+            "手を結んだ[allies_count]つの勢力が、示し合わせたように公園の各所で陽動を開始する。敵の防衛線が、目に見えて薄くなっていく。"
+
+        if arsenal_destroyed:
+            "武器工場を失った教団の銃火は、驚くほど疎らだった。"
+
         if lens_route:
             "偵察で掴んだ地下侵入経路——旧防空壕と下水道が、[first_person]たちを公園の心臓部へ導く。"
 
@@ -171,7 +179,17 @@ label ending_04_limited:
 
     "（プレースホルダー）ムーンレンズは奪えず、儀式は決行された。それでも「死へと誘う印」を解除していたことで、最悪の被害だけは免れた。……これは敗北か、それとも。"
 
+    if personal_sign_removed:
+        call ending_personal_sign_note from _call_sign_note_04
+
     jump ending_epilogue
+
+## END④⑤共通: 個人の印だけを解除していた場合の差分(SIGN-ALT)
+label ending_personal_sign_note:
+
+    "……そして[first_person]の右手に、印はない。あの夜、ナイ牧師自身の手で外されたそれが、[first_person]と“それ以外”の運命を分けた。"
+
+    return
 
 
 label ending_05_worst:
@@ -184,6 +202,9 @@ label ending_05_worst:
     centered "ENDING　⑤ 真バッドエンド「東京壊滅」"
 
     "（プレースホルダー）月が、割れるように輝いた。シュブ＝ニグラスは降臨し、関東3000万の魂が贄となる。ナイ牧師の望んだ世界が、ここに始まる。"
+
+    if personal_sign_removed:
+        call ending_personal_sign_note from _call_sign_note_05
 
     jump ending_epilogue
 

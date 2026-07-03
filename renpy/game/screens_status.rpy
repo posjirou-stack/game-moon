@@ -115,6 +115,11 @@ screen status_screen():
                     "○" if flag_endo_route else "×")
                 text "[dbg_flags]" size 24
 
+                $ dbg_misc = "勢力:%s　注意度:%d　魔術師:%d人" % (
+                    "/".join(sorted(allies)) if allies else "なし",
+                    assassination_heat, magician_count())
+                text "[dbg_misc]" size 24
+
             null height 16
 
             hbox:

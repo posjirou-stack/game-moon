@@ -127,6 +127,9 @@ init python:
             "ev_yuki6", "雪を久美の隠れ家に匿う", "ev_yuki6",
             requires=("ev_yuki4",),
             visible_if=lambda: not store.yuki_protected),
+        InvestigationEvent(
+            "ev_yuki_talk", "雪と過ごす(SAN小回復・関係値+1)", "ev_yuki_talk",
+            repeatable=True),
 
         ## ---- LENSチェーン(ムーンレンズ / F1精算の材料) ----
         InvestigationEvent(
@@ -139,6 +142,16 @@ init python:
             requires=("ev_lens1",),
             req=lambda: skill_check("investigation", 5),
             req_text="探索5で解放"),
+        InvestigationEvent(
+            "ev_lens3", "山野ビル(武器工場)を叩く", "ev_lens3",
+            requires=("ev_lens1",),
+            req=lambda: skill_check("investigation", 4) or skill_check("combat", 5),
+            req_text="探索4 か 戦闘5で解放"),
+        InvestigationEvent(
+            "ev_lens4", "教団の本拠で防衛計画を盗み出す", "ev_lens4",
+            requires=("ev_lens1",),
+            req=lambda: skill_check("investigation", 5) or skill_check("negotiation", 4),
+            req_text="探索5 か 交渉4で解放"),
 
         ## ---- RIKUチェーン(間宮凛久 / F3。12/28 21時まで) ----
         InvestigationEvent(
@@ -188,6 +201,18 @@ init python:
             visible_if=lambda: not store.sign_data_1,
             req=lambda: skill_check("investigation", 5),
             req_text="探索5で解放"),
+        InvestigationEvent(
+            "ev_church_join", "東京教会で会員登録し、内部に伝手を作る", "ev_church_join",
+            max_day=2,  # 12/25の説法当日まで
+            visible_if=lambda: not store.invitation,
+            req=lambda: skill_check("negotiation", 2),
+            req_text="交渉2で解放"),
+        InvestigationEvent(
+            "ev_sign_alt", "ナイ牧師の「特別な説法」に潜入する", "ev_sign_alt",
+            dates=("12月25日(日)",), slots=("夜",),
+            visible_if=lambda: store.invitation and not store.personal_sign_removed,
+            req=lambda: skill_check("negotiation", 4),
+            req_text="交渉4で解放(要:招待状)"),
         InvestigationEvent(
             "ev_sign3", "解呪資料の残り半分を探す", "ev_sign3",
             visible_if=lambda: store.sign_data_1 and not store.sign_data_2,
@@ -240,6 +265,34 @@ init python:
             req=lambda: (skill_check("negotiation", 5) or skill_check("combat", 6)
                          or (store.sumire_trust and skill_check("negotiation", 4))),
             req_text="交渉5 か 戦闘6 (菫の信頼があれば交渉4)で解放"),
+
+        ## ---- 勢力(協力組織)獲得(scenario-structure.md 4章) ----
+        InvestigationEvent(
+            "ev_ally_gov", "安田守に賭ける——政府ルート", "ev_ally_gov",
+            requires=("ev_yuki3",),
+            req=lambda: skill_check("negotiation", 4),
+            req_text="交渉4で解放"),
+        InvestigationEvent(
+            "ev_ally_sangen", "秋葉原の「参軒屋」を訪ねる", "ev_ally_sangen",
+            visible_if=lambda: ("kumi" in store.allies) or _done("ev_yuki3"),
+            req=lambda: skill_check("negotiation", 3),
+            req_text="交渉3で解放"),
+        InvestigationEvent(
+            "ev_ally_yama", "浅草の山蓮界に仲介を頼む", "ev_ally_yama",
+            visible_if=lambda: ("sangen" in store.allies) or store.mizuna_rescued,
+            req=lambda: skill_check("negotiation", 5),
+            req_text="交渉5で解放"),
+        InvestigationEvent(
+            "ev_ally_gilt", "銀の黄昏教団と接触する", "ev_ally_gilt",
+            min_day=1,
+            visible_if=lambda: _done("ev_yuki3") or _done("ev_sign1"),
+            req=lambda: skill_check("negotiation", 5),
+            req_text="交渉5で解放"),
+        InvestigationEvent(
+            "ev_ally_bab", "伊藤茂信の失脚工作——バベッジの糸を切る", "ev_ally_bab",
+            requires=("ev_endo3",),
+            req=lambda: skill_check("negotiation", 5) or skill_check("investigation", 5),
+            req_text="交渉5 か 探索5で解放"),
 
         ## ---- 育成コマンド(繰り返し可) ----
         InvestigationEvent(
@@ -441,6 +494,12 @@ label calendar_day_brief:
         "「――本日、光山大学では創立60周年の一般記念公開が行われます。また品川の大聖堂では、大規模な礼拝が予定されており……」"
 
         "浮かれた街の空気の下で、何かが静かに進行している。"
+
+        if "ev_endo1" in events_done and "ev_endo2b" not in events_done:
+            "（光山大学の一般公開……電子工学部の発表代表は“遠藤菫”。彼女に接触するなら、今日の昼が好機だ）"
+
+        if invitation and not personal_sign_removed:
+            "（そして今夜22時、品川で“特別な説法”。……招待状は、ポケットの中にある）"
 
     elif day_index == 3:
 
