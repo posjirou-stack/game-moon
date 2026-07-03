@@ -90,6 +90,7 @@ label chapter1_campus:
     "手がかりは増えたが、同時に不穏な影がひとつ、[first_person]の中に落ちた。"
 
     $ gain_skill("knowledge")
+    $ add_archive("takayama_report")
 
     "（……なんだか、思ったより「きな臭い」話になってきたな）"
 

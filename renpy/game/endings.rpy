@@ -43,10 +43,28 @@ init python:
             persistent.endings_seen = set()
         persistent.endings_seen.add(code)
 
+    def compute_f1():
+        """F1(ムーンレンズ奪取)の精算(scenario-structure.md 3.2章)。
+
+        「所在の情報」「戦術的な優位」「異空間への鍵(女神個体)」の3点が揃って成立する。
+        """
+        if not store.lens_located:
+            return False
+        advantage = (store.lens_route or store.arsenal_destroyed
+                     or len(store.allies) >= 2)
+        if not advantage:
+            return False
+        key = (store.yuki_memory >= 3) or store.flag_f3_rikuhisa_saved
+        return key
+
 
 label climax_ritual:
 
     $ advance_time("12月29日(木)", "夜")
+
+    ## ここまでの進行変数からF1・F2を精算する
+    $ flag_f1_moonlens = compute_f1()
+    $ flag_f2_yuki_saved = yuki_protected
 
     scene bg park_night
     with dissolve
@@ -62,7 +80,23 @@ label climax_ritual:
 
     ## ここまでの行動の成果を確認する(フェーズ3で本格的な儀式シーンに差し替える)
     if flag_f1_moonlens:
-        "だが、儀式の要「ムーンレンズ」は[first_person]たちの手の中にある。祭壇の中心で、ナイ牧師の表情が初めて歪んだ。"
+
+        "だが[first_person]たちは、この夜のために全てを積み上げてきた。"
+
+        if lens_route:
+            "偵察で掴んだ地下侵入経路——旧防空壕と下水道が、[first_person]たちを公園の心臓部へ導く。"
+
+        if yuki_memory >= 3 and flag_f3_rikuhisa_saved:
+            "そして異空間の“扉”は、雪と凛久——ふたりの女神個体の力で開かれた。"
+        elif flag_f3_rikuhisa_saved:
+            "そして異空間の“扉”は、間宮凛久の力で開かれた。"
+        else:
+            "そして異空間の“扉”は、東風谷雪の力で開かれた。"
+
+        "13枚のレンズを鉄塔から外し終えた時、遥か奥から、この世のものではない咆哮が響いた。——だが、もう遅い。"
+
+        "儀式の要「ムーンレンズ」は[first_person]たちの手の中にある。祭壇の中心で、ナイ牧師の表情が初めて歪んだ。"
+
     else:
         "祭壇の中心には、月光を集めて輝く「ムーンレンズ」。……奪えなかった。儀式は、完成へと向かっていく。"
 

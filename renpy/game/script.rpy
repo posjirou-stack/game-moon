@@ -20,6 +20,17 @@ image bg office = Solid("#1c2430")
 image bg library = Solid("#2a2620")
 image bg park_night = Solid("#0f1c14")
 image bg ritual = Solid("#1a0a1e")
+image bg house = Solid("#2b2118")      # 東風谷家
+image bg house_burnt = Solid("#17120e") # 東風谷家(焼け跡)
+image bg bar = Solid("#1f1520")        # Bar「雪国」
+image bg basement = Solid("#161a16")   # 久美啓太の地下室
+image bg nagae = Solid("#101418")      # 長江ビル
+image bg apartment = Solid("#1b1b22")  # 中西アパート
+image bg church = Solid("#100d16")     # 星の知恵派の教会
+image bg lab = Solid("#121a20")        # 遠藤研究所
+image bg grave = Solid("#151a12")      # 遠藤楓の墓
+image bg villa = Solid("#1a2016")      # 奥多摩の別荘
+image bg tower = Solid("#201a10")      # 東京タワー
 image bg black = Solid("#000000")
 
 label start:

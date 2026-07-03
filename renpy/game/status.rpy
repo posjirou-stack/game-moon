@@ -22,12 +22,47 @@ default relationship_rikuhisa = 0  # 間宮凛久
 default relationship_mizuna = 0    # 瑞名慧
 
 ## エンディング分岐フラグ F1〜F5(要件定義書 5.2章)
+## F1・F2はクライマックス(endings.rpy)で下記の進行変数から精算される。
 default flag_f1_moonlens = False        # F1: ムーンレンズ奪取
 default flag_f2_yuki_saved = False      # F2: 東風谷雪 救出
 default flag_f3_rikuhisa_saved = False  # F3: 間宮凛久 救出(12/28 21:00まで)
 default flag_f4_sign_removed = False    # F4: 死へと誘う印 解除
 default flag_f5_endo_stopped = False    # F5: 遠藤啓介の野望阻止
 default flag_endo_route = False         # ⑥特殊エンド: 遠藤啓介ルートに入ったか
+
+## ---- メインチェーン進行変数(docs/scenario-structure.md 3章) ----
+
+## YUKIチェーン
+default yuki_memory = 0        # 雪の記憶回復度(0〜3): 1=自宅 2=縁者 3=長江ビル
+default yuki_protected = False # 雪を安全な場所に匿ったか(F2の前提)
+
+## LENSチェーン(F1はクライマックスで compute_f1() により精算)
+default lens_located = False       # ムーンレンズの所在=哲学堂公園と確定
+default lens_route = False         # 防衛体制と地下侵入経路の情報
+default arsenal_destroyed = False  # 山野ビル(武器工場)破壊 ※優先度B
+
+## RIKUチェーン
+default riku_located = False   # 監禁場所=中西アパートの特定
+default riku_scouted = False   # 咲耶の不在時間帯の把握
+default riku_rescued = False   # 凛久の身柄確保(洗脳解除=F3はev_riku4)
+
+## SIGNチェーン
+default sign_known = False          # 印の正体の知識
+default sign_data_1 = False         # 呪文詳細・第1資料(長江ビル/東京教会)
+default sign_data_2 = False         # 呪文詳細・第2資料(遠藤研究所など)
+default sign_research_done = False  # 12時間の解呪研究完了
+
+## ENDOチェーン
+default endo_suspect = False     # 「森本蓮司」への疑い
+default endo_identified = False  # 森本蓮司=遠藤啓介の確証
+default sumire_trust = False     # 遠藤菫の信頼(F5説得の緩和・END⑥分岐)
+
+## 勢力(協力組織)。"kumi"/"gov"/"gilt"/"yama"/"sangen"/"bab" を格納する
+default allies = set()
+
+## 暗殺カウンタ(END⑦の追加トリガー。scenario-structure.md 7章)
+default assassination_heat = 0        # 敵組織の注意度
+default assassination_pending = False # 閾値超過→次のハブで襲撃イベント発生
 
 ## カレンダー表示用(HUD・ステータス画面が参照する)。
 ## 12/21〜12/22はチャプター1が advance_time() で直接更新し、
@@ -90,3 +125,35 @@ init python:
         """カレンダー表示を更新する(チャプター1の一本道区間で使用)"""
         store.game_date = date
         store.game_time = time
+
+    ## ---- 暗殺カウンタ(END⑦の追加トリガー) ----
+
+    ASSASSINATION_THRESHOLD = 4
+
+    def add_heat(amount):
+        """敵組織の注意度を上げる。閾値を超えると次のハブで襲撃イベントが発生する。
+
+        久美啓太の隠れ家(allies に "kumi")を確保していれば、原作の
+        「幾度も暗殺を防いだ実績のある久美啓太の家」に倣い襲撃は発生しない。
+        """
+        store.assassination_heat += amount
+        if store.assassination_heat >= ASSASSINATION_THRESHOLD and "kumi" not in store.allies:
+            store.assassination_pending = True
+            renpy.notify("……刺すような視線を感じる")
+        else:
+            renpy.notify("敵組織の注意を引いた(注意度 %d)" % store.assassination_heat)
+
+    def magician_count():
+        """解呪儀式(SIGN-5)に動員できる協力魔術師の人数(scenario-structure.md 4章)。"""
+        total = 0
+        if "kumi" in store.allies:
+            total += 20
+        if "gov" in store.allies:
+            total += 30
+        if "yama" in store.allies:
+            total += 50
+        if "sangen" in store.allies:
+            total += 30
+        if "gilt" in store.allies:
+            total += 150
+        return total

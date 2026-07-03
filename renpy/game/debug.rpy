@@ -106,6 +106,13 @@ screen debug_menu():
                 textbutton "−10" action Function(debug_add, "san", -10) text_size 20
                 textbutton "＋10" action Function(debug_add, "san", 10) text_size 20
 
+            hbox:
+                spacing 8
+                text "雪の記憶: [yuki_memory]　注意度: [assassination_heat]" min_width 280 size 22
+                textbutton "記憶＋1" action Function(debug_add, "yuki_memory", 1) text_size 20
+                textbutton "注意＋1" action Function(debug_add, "assassination_heat", 1) text_size 20
+                textbutton "雪保護" action ToggleVariable("yuki_protected") text_size 20
+
             text "◆ エンディング分岐フラグ" size 22 color "#ffe08a"
 
             hbox:

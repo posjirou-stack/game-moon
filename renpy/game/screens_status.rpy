@@ -117,7 +117,11 @@ screen status_screen():
 
             null height 16
 
-            textbutton "閉じる" action Return() xalign 0.5
+            hbox:
+                xalign 0.5
+                spacing 30
+                textbutton "資料庫" action ShowMenu("archive_screen")
+                textbutton "閉じる" action Return()
 
     key "game_menu" action Return()
 
