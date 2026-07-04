@@ -6,12 +6,17 @@ label chapter1_izakaya:
 
     $ advance_time("12月21日(水)", "夜")
 
+    $ play_bgm("daily")
+
     scene bg izakaya
     with dissolve
 
     "◆ 12月21日(水) 20:00　新橋駅から徒歩10分　居酒屋「夜叉」"
 
     "呼び出されるがままに来てみれば、案の定というべきか。"
+
+    show mizuna normal
+    with dissolve
 
     mizuna "よお、[mc_name]。急に呼び出して悪かったな。"
 
@@ -34,6 +39,8 @@ label chapter1_izakaya:
     m "……警察には？"
 
     mizuna "届けは出てる。だが動きが鈍い。上の方に妙な圧力がかかってる、って噂もある。"
+
+    show mizuna serious
 
     "瑞名の声のトーンが、いつもより少しだけ低くなる。"
 
@@ -59,6 +66,8 @@ label chapter1_izakaya:
 label chapter1_campus:
 
     $ advance_time("12月22日(木)", "昼")
+
+    $ play_bgm("investigation")
 
     scene bg campus
     with dissolve
@@ -101,6 +110,8 @@ label chapter1_encounter:
 
     $ advance_time("12月22日(木)", "夜")
 
+    $ play_bgm("tension")
+
     scene bg street_night
     with dissolve
 
@@ -122,6 +133,9 @@ label chapter1_encounter:
     "街灯の下でちらりと覗いた顔に、[first_person]は息を呑んだ。"
 
     "――写真で見た顔と、同じだった。"
+
+    show yuki fear
+    with dissolve
 
     m "……東風谷、雪さん？"
 
@@ -148,6 +162,8 @@ label chapter1_encounter:
     "足音が完全に聞こえなくなってから、[first_person]はようやく詰めていた息を吐いた。"
 
     m "……大丈夫？　もう、行ったよ。"
+
+    show yuki sad
 
     yuki "………ありがとう、ございます……"
 

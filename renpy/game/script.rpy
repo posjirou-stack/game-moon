@@ -11,26 +11,59 @@ define rikuhisa = Character("間宮 凛久", color="#a8e6a1")
 define endo = Character("遠藤 啓介", color="#d0a0ff")
 define m = DynamicCharacter("mc_name", color="#ffe08a")
 
-## 背景はまだアセット未着手のため、単色のプレースホルダーで場面転換を表現する。
-image bg izakaya = Solid("#241611")
-image bg street_night = Solid("#0d1128")
-image bg campus = Solid("#233022")
-image bg alley = Solid("#141019")
-image bg office = Solid("#1c2430")
-image bg library = Solid("#2a2620")
-image bg park_night = Solid("#0f1c14")
-image bg ritual = Solid("#1a0a1e")
-image bg house = Solid("#2b2118")      # 東風谷家
-image bg house_burnt = Solid("#17120e") # 東風谷家(焼け跡)
-image bg bar = Solid("#1f1520")        # Bar「雪国」
-image bg basement = Solid("#161a16")   # 久美啓太の地下室
-image bg nagae = Solid("#101418")      # 長江ビル
-image bg apartment = Solid("#1b1b22")  # 中西アパート
-image bg church = Solid("#100d16")     # 星の知恵派の教会
-image bg lab = Solid("#121a20")        # 遠藤研究所
-image bg grave = Solid("#151a12")      # 遠藤楓の墓
-image bg villa = Solid("#1a2016")      # 奥多摩の別荘
-image bg tower = Solid("#201a10")      # 東京タワー
+## 背景と立ち絵の登録。
+## game/images/ に該当ファイルがあればそれを使い、なければプレースホルダー
+## (背景=単色、立ち絵=非表示)で動く。ファイル名の規約は docs/asset-list.md を参照。
+## アセットを追加したら、ファイルを置くだけで次回起動時から反映される。
+
+init python:
+
+    def _register_bg(name, color):
+        path = "images/bg/" + name + ".png"
+        if renpy.loadable(path):
+            renpy.image("bg " + name, path)
+        else:
+            renpy.image("bg " + name, Solid(color))
+
+    _register_bg("izakaya", "#241611")       # 居酒屋「夜叉」
+    _register_bg("street_night", "#0d1128")  # 夜の繁華街
+    _register_bg("campus", "#233022")        # 光山大学
+    _register_bg("alley", "#141019")         # 裏路地
+    _register_bg("office", "#1c2430")        # 玲紀探偵事務所
+    _register_bg("library", "#2a2620")       # 図書館・古崎堂
+    _register_bg("park_night", "#0f1c14")    # 哲学堂公園(夜)
+    _register_bg("ritual", "#1a0a1e")        # 儀式場・異空間
+    _register_bg("house", "#2b2118")         # 東風谷家
+    _register_bg("house_burnt", "#17120e")   # 東風谷家(焼け跡)
+    _register_bg("bar", "#1f1520")           # Bar「雪国」
+    _register_bg("basement", "#161a16")      # 久美啓太の地下室
+    _register_bg("nagae", "#101418")         # 長江ビル
+    _register_bg("apartment", "#1b1b22")     # 中西アパート
+    _register_bg("church", "#100d16")        # 星の知恵派の教会
+    _register_bg("lab", "#121a20")           # 遠藤研究所
+    _register_bg("grave", "#151a12")         # 遠藤楓の墓
+    _register_bg("villa", "#1a2016")         # 奥多摩の別荘
+    _register_bg("tower", "#201a10")         # 東京タワー
+
+    ## 立ち絵(キャラ×表情差分)。ファイルが無い間は Null(何も表示しない)として
+    ## 登録するので、show/hide 文はアセット到着前から書いておける。
+    CHAR_SPRITES = {
+        "yuki":    ("normal", "smile", "fear", "sad"),
+        "riku":    ("blank", "normal", "smile"),
+        "mizuna":  ("normal", "serious"),
+        "kumi":    ("normal",),
+        "endo":    ("normal", "tired"),
+        "sumire":  ("normal",),
+    }
+
+    for _c, _emotes in CHAR_SPRITES.items():
+        for _e in _emotes:
+            _p = "images/char/%s_%s.png" % (_c, _e)
+            if renpy.loadable(_p):
+                renpy.image(_c + " " + _e, _p)
+            else:
+                renpy.image(_c + " " + _e, Null())
+
 image bg black = Solid("#000000")
 
 label start:

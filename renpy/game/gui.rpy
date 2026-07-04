@@ -91,7 +91,7 @@ define gui.title_text_size = 50
 ## Main and Game Menus #########################################################
 
 ## The images used for the main and game menus.
-define gui.main_menu_background = "#0d1128"
+define gui.main_menu_background = "images/bg/title.png" if renpy.loadable("images/bg/title.png") else "#0d1128"
 define gui.game_menu_background = "#0a0a14"
 
 

@@ -67,6 +67,7 @@ init python:
 label climax_ritual:
 
     $ advance_time("12月29日(木)", "夜")
+    $ play_bgm("ritual")
 
     ## ここまでの進行変数からF1・F2を精算する
     $ flag_f1_moonlens = compute_f1()
@@ -259,6 +260,8 @@ label ending_01_true:
     scene bg black
     with dissolve
 
+    $ play_bgm("ending_good")
+
     centered "ENDING　① 真エンド「大団円」"
 
     scene bg office
@@ -292,6 +295,10 @@ label ending_01_true:
     "◆ 1月1日　未明"
 
     "初詣の人波から少し外れた神社の石段に、[first_person]と、雪と、凛久がいた。"
+
+    show riku smile at left
+    show yuki smile at right
+    with dissolve
 
     rikuhisa "ゆきちゃん、ほら、甘酒。……[mc_name]さんも。"
 
@@ -337,6 +344,8 @@ label ending_02_good:
 
     scene bg black
     with dissolve
+
+    $ play_bgm("ending_good")
 
     centered "ENDING　② グッドエンド「勝利と代償」"
 
@@ -393,6 +402,8 @@ label ending_03_normal:
     scene bg black
     with dissolve
 
+    $ play_bgm("ending_good")
+
     centered "ENDING　③ ノーマルエンド「黒幕を止められず」"
 
     "儀式は止めた。ムーンレンズは[first_person]たちの手にあり、シュブ＝ニグラスが東京の空に降りることは、ついになかった。"
@@ -445,6 +456,8 @@ label ending_04_limited:
     scene bg black
     with dissolve
 
+    $ play_bgm("ending_bad")
+
     centered "ENDING　④ 限定的破滅エンド"
 
     scene bg ritual
@@ -496,6 +509,8 @@ label ending_05_worst:
     scene bg black
     with dissolve
 
+    $ play_bgm("ending_bad")
+
     centered "ENDING　⑤ 真バッドエンド「東京壊滅」"
 
     scene bg ritual
@@ -542,6 +557,8 @@ label ending_06_endo:
     scene bg black
     with dissolve
 
+    $ play_bgm("ending_good")
+
     centered "ENDING　⑥ 特殊エンド「遠藤啓介ルート」"
 
     scene bg villa
@@ -552,6 +569,9 @@ label ending_06_endo:
     "すべてが終わった翌朝、[first_person]の携帯に、非通知の着信があった。"
 
     endo "——別荘にいる。最後の話をしよう。あの夜の“続き”を聞く権利が、君にはある。"
+
+    show endo tired
+    with dissolve
 
     "暖炉の前で、遠藤啓介は待っていた。旅支度を終えた、ひとりの疲れた男として。"
 
@@ -626,6 +646,8 @@ label ending_07_early_exit:
     scene bg black
     with dissolve
 
+    $ play_bgm("ending_bad")
+
     centered "ENDING　⑦ 早期離脱エンド"
 
     if early_exit_cause == "assassin":
@@ -696,6 +718,7 @@ label ending_personal_sign_note:
 label ending_epilogue:
 
     $ hud_visible = False
+    $ stop_bgm()
 
     $ endings_count = len(persistent.endings_seen)
 

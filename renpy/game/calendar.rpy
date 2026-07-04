@@ -413,6 +413,7 @@ screen action_select():
 label calendar_start:
 
     $ sync_calendar_time()
+    $ play_bgm("investigation")
 
     scene bg black
     with dissolve

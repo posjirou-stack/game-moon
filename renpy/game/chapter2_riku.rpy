@@ -72,6 +72,9 @@ label ev_riku3a:
 
     "洗脳室の奥の小部屋に、その少女はいた。写真の中で雪と笑っていた少女——間宮凛久。"
 
+    show riku blank
+    with dissolve
+
     rikuhisa "……あなた、だれ？　咲耶ちゃんじゃ、ない。"
 
     "虚ろな瞳。だが押し問答をする時間はない。[first_person]は用意していた強力な睡眠導入剤を使い、眠った彼女を毛布ごと担ぎ上げた。"
@@ -103,6 +106,9 @@ label ev_riku3b:
     $ change_san(-2)
 
     "洗脳室の奥。間宮凛久は、抵抗しなかった。"
+
+    show riku blank
+    with dissolve
 
     rikuhisa "……教団の、命令なんですね。わかりました。凛久、ついていきます。"
 
@@ -170,6 +176,9 @@ label ev_riku4:
 
     "久美の地下室に匿った凛久は、静かだった。静かすぎた。"
 
+    show riku blank
+    with dissolve
+
     rikuhisa "内側に存在するこの世界を外宇宙へ、あるべき場所へ回帰し、この崩壊寸前の世界原理を破壊しないといけないのだよ？　……大丈夫？"
 
     "口をつくのは、教え込まれた“経典”ばかり。彼女の目は、[first_person]たちの向こう側の何かを見ている。"
@@ -177,6 +186,9 @@ label ev_riku4:
     if yuki_memory >= 3:
 
         "だが——こちらには、切り札がいた。"
+
+        show yuki sad at left
+        with dissolve
 
         yuki "……りくちゃん。わたしだよ。ゆきだよ。"
 
@@ -204,6 +216,8 @@ label ev_riku4:
     $ change_relationship("yuki", 1)
 
     "――間に合った。12月28日21時の刻限より、早く。"
+
+    show riku normal
 
     rikuhisa "……ありがとう、ございます。わたし、覚えてます。ぜんぶ。……あの人たちのことも、“あの場所”のことも。"
 

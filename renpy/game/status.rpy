@@ -131,6 +131,22 @@ init python:
         store.game_date = date
         store.game_time = time
 
+    def play_bgm(track, fade=1.5):
+        """BGMを再生する。game/audio/bgm/<track>.ogg が無ければ静かに停止するだけ。
+
+        アセット未導入でも安全に呼べるので、シーン冒頭に書いておける
+        (トラック一覧と曲調の指定は docs/asset-list.md を参照)。
+        """
+        fn = "audio/bgm/" + track + ".ogg"
+        if renpy.loadable(fn):
+            if renpy.music.get_playing() != fn:
+                renpy.music.play(fn, fadeout=fade, fadein=fade, loop=True)
+        else:
+            renpy.music.stop(fadeout=fade)
+
+    def stop_bgm(fade=2.0):
+        renpy.music.stop(fadeout=fade)
+
     ## ---- 暗殺カウンタ(END⑦の追加トリガー) ----
 
     ASSASSINATION_THRESHOLD = 4

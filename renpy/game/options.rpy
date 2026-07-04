@@ -19,3 +19,6 @@ define config.has_autosave = True
 define config.window_title = "月夜が魅せる物語 -Fated Moonlight-（プロトタイプ・非公開）"
 
 ## 終了確認はGUIテンプレートのconfirm画面に任せる
+
+## タイトル画面のBGM(ファイルが置かれていれば自動で有効になる)
+define config.main_menu_music = "audio/bgm/main_theme.ogg" if renpy.loadable("audio/bgm/main_theme.ogg") else None
