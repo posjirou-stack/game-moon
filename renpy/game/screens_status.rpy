@@ -129,28 +129,3 @@ screen status_screen():
                 textbutton "閉じる" action Return()
 
     key "game_menu" action Return()
-
-
-## renpy.notify() 用の通知表示(画面左上に数秒だけ出る)
-screen notify(message):
-
-    zorder 100
-
-    frame at notify_appear:
-        xpos 20
-        ypos 60
-        xpadding 16
-        ypadding 8
-        background "#000000c0"
-
-        text "[message!tq]" size 22 color "#ffe08a"
-
-    timer 3.25 action Hide("notify")
-
-
-transform notify_appear:
-    on show:
-        alpha 0
-        linear .25 alpha 1.0
-    on hide:
-        linear .5 alpha 0.0

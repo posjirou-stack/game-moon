@@ -117,6 +117,7 @@ label ev_assassination:
 
                 ## call されたラベル内からエンディングへ抜けるため、戻り先を破棄する
                 $ renpy.pop_call()
+                $ early_exit_cause = "assassin"
 
                 jump ending_07_early_exit
 
@@ -140,6 +141,7 @@ label ev_assassination:
 
                 ## call されたラベル内からエンディングへ抜けるため、戻り先を破棄する
                 $ renpy.pop_call()
+                $ early_exit_cause = "assassin"
 
                 jump ending_07_early_exit
 

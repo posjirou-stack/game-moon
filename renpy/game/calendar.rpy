@@ -394,11 +394,10 @@ screen action_select():
 
             null height 4
 
-            ## GUIテンプレート未導入のフォールバックでは scrollbars 付き viewport が
-            ## 描画されないため、素の viewport(ホイール/ドラッグスクロール)を使う
             viewport:
                 xsize 1000
                 ysize 430
+                scrollbars "vertical"
                 mousewheel True
                 draggable True
 
@@ -429,6 +428,7 @@ label calendar_hub:
 
     ## SAN枯渇は即、早期離脱エンド(⑦)
     if san <= 0:
+        $ early_exit_cause = "san"
         jump ending_07_early_exit
 
     ## 暗殺カウンタが閾値を超えていれば襲撃イベント(END⑦の追加トリガー)

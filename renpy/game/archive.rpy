@@ -138,10 +138,11 @@ screen archive_screen():
             hbox:
                 spacing 24
 
-                ## 左: 文書一覧(フォールバック環境のため scrollbars なしの viewport)
+                ## 左: 文書一覧
                 viewport:
                     xsize 330
                     ysize 430
+                    scrollbars "vertical"
                     mousewheel True
                     draggable True
 
@@ -158,6 +159,7 @@ screen archive_screen():
                 viewport:
                     xsize 640
                     ysize 430
+                    scrollbars "vertical"
                     mousewheel True
                     draggable True
 
