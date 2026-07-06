@@ -44,7 +44,8 @@ as if lit by moonlight, Japanese modern winter clothing, high detail
 ## 2. 背景(19点 + タイトル)
 
 - 置き場所: `renpy/game/images/bg/<name>.png`
-- サイズ: **1280x720** (大きい場合は縮小トリミングして合わせる)
+- **拡張子は png / jpg / jpeg / webp のどれでもよい**(pngが最優先で使われる)
+- サイズ: **1280x720** (大きい場合は縮小トリミングして合わせる。多少違っても表示はされる)
 
 | ファイル名 | 場所 | プロンプト案(共通接頭辞のあとに追加) |
 |---|---|---|
@@ -71,7 +72,7 @@ as if lit by moonlight, Japanese modern winter clothing, high detail
 
 ## 3. 立ち絵(6キャラ・計13枚)
 
-- 置き場所: `renpy/game/images/char/<キャラ>_<表情>.png`
+- 置き場所: `renpy/game/images/char/<キャラ>_<表情>.png` (png/jpg/webp可。ただし**透過が必要なのでpng推奨**)
 - サイズ: 高さ **約650px**(720pの画面で膝上〜全身が収まる程度)、背景透過PNG
 - ゲーム側は `show yuki fear` 等で表示する(配置済み)。差分を後から増やす場合は
   `script.rpy` の `CHAR_SPRITES` に表情名を追加する
@@ -98,7 +99,8 @@ winter coat, slightly anxious neutral expression
 
 ## 4. BGM(8曲)
 
-- 置き場所: `renpy/game/audio/bgm/<name>.ogg` (mp3しか出せない場合は変換する)
+- 置き場所: `renpy/game/audio/bgm/<name>.ogg`
+- **拡張子は ogg / mp3 / opus / wav のどれでもよい**(変換不要。oggが最優先で使われる)
 - ループ再生される。2〜3分でループの継ぎ目が自然な曲が望ましい
 - 生成サービス(Suno等)には「instrumental, loopable, no vocals」を必ず指定
 

@@ -18,9 +18,18 @@ define m = DynamicCharacter("mc_name", color="#ffe08a")
 
 init python:
 
+    IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp")
+
+    def _find_image(base):
+        """拡張子違い(png/jpg/jpeg/webp)を順に探し、最初に見つかったパスを返す。"""
+        for ext in IMAGE_EXTS:
+            if renpy.loadable(base + ext):
+                return base + ext
+        return None
+
     def _register_bg(name, color):
-        path = "images/bg/" + name + ".png"
-        if renpy.loadable(path):
+        path = _find_image("images/bg/" + name)
+        if path:
             renpy.image("bg " + name, path)
         else:
             renpy.image("bg " + name, Solid(color))
@@ -58,8 +67,8 @@ init python:
 
     for _c, _emotes in CHAR_SPRITES.items():
         for _e in _emotes:
-            _p = "images/char/%s_%s.png" % (_c, _e)
-            if renpy.loadable(_p):
+            _p = _find_image("images/char/%s_%s" % (_c, _e))
+            if _p:
                 renpy.image(_c + " " + _e, _p)
             else:
                 renpy.image(_c + " " + _e, Null())

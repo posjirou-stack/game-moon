@@ -137,8 +137,13 @@ init python:
         アセット未導入でも安全に呼べるので、シーン冒頭に書いておける
         (トラック一覧と曲調の指定は docs/asset-list.md を参照)。
         """
-        fn = "audio/bgm/" + track + ".ogg"
-        if renpy.loadable(fn):
+        fn = None
+        for ext in (".ogg", ".mp3", ".opus", ".wav"):
+            cand = "audio/bgm/" + track + ext
+            if renpy.loadable(cand):
+                fn = cand
+                break
+        if fn:
             if renpy.music.get_playing() != fn:
                 renpy.music.play(fn, fadeout=fade, fadein=fade, loop=True)
         else:

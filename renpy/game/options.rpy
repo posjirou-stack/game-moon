@@ -21,4 +21,4 @@ define config.window_title = "月夜が魅せる物語 -Fated Moonlight-（プ�
 ## 終了確認はGUIテンプレートのconfirm画面に任せる
 
 ## タイトル画面のBGM(ファイルが置かれていれば自動で有効になる)
-define config.main_menu_music = "audio/bgm/main_theme.ogg" if renpy.loadable("audio/bgm/main_theme.ogg") else None
+define config.main_menu_music = next((("audio/bgm/main_theme" + e) for e in (".ogg", ".mp3", ".opus", ".wav") if renpy.loadable("audio/bgm/main_theme" + e)), None)
