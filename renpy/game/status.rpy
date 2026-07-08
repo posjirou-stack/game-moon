@@ -5,7 +5,8 @@
 
 default gender = None          # "male" / "female"
 default first_person = "僕"
-default mc_name = "神来杜湊"    # 苗字:神来杜(からいと) 名:湊(みなと)
+default mc_name = "神来杜湊"    # 苗字:神来杜(からいと) 名:湊(みなと)。地の文・自己紹介・HUD表示で使う
+default mc_call = "湊"          # 会話文で他者が呼びかける際の呼称(フルネーム呼びの不自然さを回避)
 
 ## 4方向スキルライン(7.1章)。初期値はハンドアウト4寄り(知識・オカルト)を高めに設定。
 default skill_knowledge = 3      # 知識・オカルト(初期タイプ)
