@@ -28,11 +28,26 @@ init python:
         return None
 
     def _register_bg(name, color):
-        path = _find_image("images/bg/" + name)
-        if path:
-            renpy.image("bg " + name, path)
+        """背景 "bg <name>" を登録する。
+        ・<name>_day と <name>_night が両方あれば game_time に応じて自動で出し分ける
+          (ConditionSwitch)。チャプター本文の `scene bg <name>` は書き換え不要。
+        ・片方のみ、または単一画像 <name> があればそれを使う。
+        ・何も無ければ単色プレースホルダーで動く。
+        """
+        day = _find_image("images/bg/" + name + "_day")
+        night = _find_image("images/bg/" + name + "_night")
+        if day and night:
+            renpy.image("bg " + name, ConditionSwitch(
+                "game_time == '昼'", day,
+                "True", night))
+        elif day or night:
+            renpy.image("bg " + name, day or night)
         else:
-            renpy.image("bg " + name, Solid(color))
+            path = _find_image("images/bg/" + name)
+            if path:
+                renpy.image("bg " + name, path)
+            else:
+                renpy.image("bg " + name, Solid(color))
 
     _register_bg("izakaya", "#241611")       # 居酒屋「夜叉」
     _register_bg("street_night", "#0d1128")  # 夜の繁華街
