@@ -27,6 +27,18 @@ init python:
                 return base + ext
         return None
 
+    ## 立ち絵の表示高さ(px)。生成画像は巨大(高さ数千px)なので、画面(720p)に
+    ## 収まるようこの高さへ縮小し、画面下端中央に接地させる。show <char> at left/right
+    ## による左右位置指定はそのまま効く(xalign を上書きするため)。
+    SPRITE_H = 660
+
+    def _sprite(path):
+        """立ち絵パスを、アスペクト比を保ったまま画面に収まる高さへ縮小し、
+        下端中央に配置する Transform で包む。fit="contain" で確実に縦横比を維持する
+        (生成画像は寸法がまちまちなので ysize 単体では歪む場合があるため)。"""
+        return Transform(path, xysize=(config.screen_width, SPRITE_H),
+                         fit="contain", yalign=1.0, xalign=0.5)
+
     def _register_bg(name, color):
         """背景 "bg <name>" を登録する。
         ・<name>_day と <name>_night が両方あれば game_time に応じて自動で出し分ける
@@ -69,8 +81,12 @@ init python:
     _register_bg("villa", "#1a2016")         # 奥多摩の別荘
     _register_bg("tower", "#201a10")         # 東京タワー
 
-    ## 立ち絵(キャラ×表情差分)。ファイルが無い間は Null(何も表示しない)として
-    ## 登録するので、show/hide 文はアセット到着前から書いておける。
+    ## 立ち絵(キャラ×表情差分)。
+    ## 表情差分のファイルが無い場合は、そのキャラの normal 立ち絵に自動フォールバック
+    ## する(例: yuki_fear.png が無ければ yuki_normal.png を表示)。これにより各キャラ
+    ## 1枚(_normal)を置くだけで show <char> <expr> がすべて絵付きで動き、差分が
+    ## 到着したらファイルを置くだけで自動的に個別表示へ切り替わる。
+    ## normal すら無ければ Null(何も表示しない)として安全に登録する。
     CHAR_SPRITES = {
         "yuki":    ("normal", "smile", "fear", "sad"),
         "riku":    ("blank", "normal", "smile"),
@@ -81,10 +97,11 @@ init python:
     }
 
     for _c, _emotes in CHAR_SPRITES.items():
+        _norm = _find_image("images/char/%s_normal" % _c)
         for _e in _emotes:
-            _p = _find_image("images/char/%s_%s" % (_c, _e))
+            _p = _find_image("images/char/%s_%s" % (_c, _e)) or _norm
             if _p:
-                renpy.image(_c + " " + _e, _p)
+                renpy.image(_c + " " + _e, _sprite(_p))
             else:
                 renpy.image(_c + " " + _e, Null())
 
