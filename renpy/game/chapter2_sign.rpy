@@ -21,7 +21,13 @@ label ev_sign1:
 
     $ change_san(-2)
 
+    scene cg sign_mark
+    with dissolve
+
     "ぞっとして右手の甲を見る。何も見えない。だが、この街の3000万人すべてに——同じ“標”が刻まれているのだという。"
+
+    scene bg library
+    with dissolve
 
     "「解く方法は、ある。刻んだ時と逆の手順で、地脈に触れればいい。詳細を知りたければ、奴らの“研究”を盗んでくることだ。ふふ……代金は、その時の話の面白さでいい」"
 
@@ -113,9 +119,15 @@ label ev_sign_alt:
 
     "12月25日、22時。品川大聖堂の地下。招待状を持つ80人の“優秀な信者”に紛れ、[first_person]はその場にいた。"
 
+    scene cg nye_portrait
+    with dissolve
+
     "現れたのは、漆黒の祭服の男。ナイ牧師——星の知恵派の頂点。その姿を目にした瞬間、本能が「これは人間の形をした別の何かだ」と悲鳴を上げた。"
 
     $ change_san(-3)
+
+    scene bg church
+    with dissolve
 
     "説法が、始まる。"
 

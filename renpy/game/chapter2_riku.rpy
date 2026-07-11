@@ -134,9 +134,15 @@ label ev_riku3c:
 
     "時間がない。[first_person]は迷いを捨て、正面から扉を蹴破った。"
 
+    scene cg gasmask_soldier
+    with dissolve
+
     "警報。怒号。防護服に身を包んだSAN48の暗殺者たちが、神経ガスの噴射器を手に殺到してくる。"
 
     $ change_san(-3)
+
+    scene bg apartment
+    with dissolve
 
     "鍛え上げた体術で最初の2人を沈め、奪ったガスマスクで毒煙を凌ぎ、地下への階段を駆け下りる。"
 
@@ -216,6 +222,12 @@ label ev_riku4:
     $ change_relationship("yuki", 1)
 
     "――間に合った。12月28日21時の刻限より、早く。"
+
+    scene cg riku_title_card
+    with dissolve
+
+    scene bg basement
+    with dissolve
 
     show riku normal
 

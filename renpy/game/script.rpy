@@ -81,6 +81,19 @@ init python:
     _register_bg("villa", "#1a2016")         # 奥多摩の別荘
     _register_bg("tower", "#201a10")         # 東京タワー
 
+    ## イベントCG(全画面イラスト)。ファイルが無ければ何も表示せず(Null)、
+    ## `scene cg <name>` は安全に無視される(以後のシーンにそのまま繋がる)。
+    def _register_cg(name):
+        path = _find_image("images/cg/" + name)
+        renpy.image("cg " + name, path if path else Null())
+
+    _register_cg("sign_mark")         # 《死へと誘う印》の刻印(右手甲)
+    _register_cg("nye_portrait")      # ナイ牧師の登場
+    _register_cg("endo_reveal")       # バベッジ・遠藤啓介の正体、繋がる証拠
+    _register_cg("assassin_gunman")   # SAN48暗殺者の襲撃
+    _register_cg("gasmask_soldier")   # 中西アパート強行突入時のSAN48兵
+    _register_cg("riku_title_card")   # 間宮凛久、洗脳解除の瞬間
+
     ## 立ち絵(キャラ×表情差分)。
     ## 表情差分のファイルが無い場合は、そのキャラの normal 立ち絵に自動フォールバック
     ## する(例: yuki_fear.png が無ければ yuki_normal.png を表示)。これにより各キャラ

@@ -91,7 +91,13 @@ label ev_assassination:
 
     "前方にひとり。背後にふたり。足音を消した人影が、ゆっくりと距離を詰めてくる。フードの下に覗くのは、聖歌隊の徽章。"
 
+    scene cg assassin_gunman
+    with dissolve
+
     "（SAN48——踏み込みすぎた代償が、来た）"
+
+    scene bg alley
+    with dissolve
 
     $ change_san(-2)
 

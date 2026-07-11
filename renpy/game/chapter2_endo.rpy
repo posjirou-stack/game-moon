@@ -19,7 +19,13 @@ label ev_endo1:
 
     $ add_archive("occult_monthly")
 
+    scene cg endo_reveal
+    with dissolve
+
     "バベッジ・インコーポレイテッドの“オカルト的な面の教祖”——遠藤啓介。消えた男の影が、後任者の輪郭とぴたりと重なっていく。"
+
+    scene bg campus
+    with dissolve
 
     $ endo_suspect = True
     $ gain_skill("investigation")
