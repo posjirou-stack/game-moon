@@ -6,3 +6,8 @@ renpy/**/*.rpymc
 renpy/log.txt
 renpy/traceback.txt
 renpy/errors.txt
+
+# Android署名鍵(絶対にコミットしない。紛失するとアプデ不可なので手元にバックアップを)
+renpy/*.keystore
+renpy/android.json
+renpy/.android.json
