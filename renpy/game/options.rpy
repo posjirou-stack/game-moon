@@ -4,7 +4,7 @@
 define config.name = _("月夜が魅せる物語 -Fated Moonlight-")
 define gui.show_name = True
 
-define config.version = "0.3.0-dev"
+define config.version = "0.4.0-dev"
 
 define build.name = "tsukiyo_ga_miseru_monogatari"
 
