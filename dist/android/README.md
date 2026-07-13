@@ -2,7 +2,7 @@
 
 ## ダウンロード
 
-このフォルダの `com.posjirou.tsukiyomonogatari-release.apk` (約202MB) を開き、
+このフォルダの `com.posjirou.tsukiyomonogatari-release.apk` (約202MB・v0.4.0) を開き、
 「Download raw file」ボタン(ダウンロードアイコン)でダウンロードする。
 スマホのブラウザから直接ダウンロードするのが手軽。
 
