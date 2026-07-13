@@ -58,6 +58,35 @@ default personal_sign_removed = False  # 探索者自身の印のみ解除(SIGN-
 ## その他の進行変数
 default mizuna_rescued = False      # 瑞名慧を月鏡緑化管理会社の地下から救出したか
 
+## ---- 幕間・サブイベント・交流イベント(企画書 2026-07-13) ----
+
+## 独1・独7: 東風谷家で見つかる雪の楽器と二重奏の楽譜
+default yuki_instrument_found = False
+default duet_score_found = False
+## サ1: 東京駅コンサートで雪が金賞の自由曲を取り戻したか(独2の前提)
+default yuki_song_recovered = False
+## サ5/幕4: SAN48(聖歌隊アイドル)の顔を知っているか(サ3で咲耶に気づく前提)
+default san48_seen = False
+## サ3: 大学で「フードの少女」=伊東咲耶の素顔を見たか
+default sakuya_seen = False
+## サ6: 哲学堂公園の集会を偵察したか(LENS-2の判定緩和)
+default park_recon = False
+## 独6: 遠藤菫の自作ガジェット(異空間接近の検知装置)
+default sumire_gadget = False
+## 交7: 張雪麗と卓を囲んだか(ALLY-YAMAの判定緩和)
+default mahjong_played = False
+## 交9: アリッサの問い「山田白を、どう思う」への答え("kind"/"cold"/None)
+default alissa_answer = None
+## 交流イベントの達成記録(エンディング後日談の厚み・クライマックス差分に使う)
+default bonds = set()
+## サ2: 高山の猫(枠消費なし・1日1回)の最終訪問日
+default cat_day = -1
+## 独5: トートの栞(行き詰まり検知)。育成連打の連続回数と最終ヒント日
+default grind_streak = 0
+default toto_hint_day = -1
+## 幕間の再生記録(同じ幕間を二度流さない)
+default interludes_seen = set()
+
 ## ENDOチェーン
 default endo_suspect = False     # 「森本蓮司」への疑い
 default endo_identified = False  # 森本蓮司=遠藤啓介の確証

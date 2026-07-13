@@ -140,8 +140,9 @@ init python:
         InvestigationEvent(
             "ev_lens2", "哲学堂公園を偵察する", "ev_lens2",
             requires=("ev_lens1",),
-            req=lambda: skill_check("investigation", 5),
-            req_text="探索5で解放"),
+            req=lambda: (skill_check("investigation", 5)
+                         or (store.park_recon and skill_check("investigation", 4))),
+            req_text="探索5で解放(集会を偵察済みなら探索4)"),
         InvestigationEvent(
             "ev_lens3", "山野ビル(武器工場)を叩く", "ev_lens3",
             requires=("ev_lens1",),
@@ -280,19 +281,80 @@ init python:
         InvestigationEvent(
             "ev_ally_yama", "浅草の山蓮界に仲介を頼む", "ev_ally_yama",
             visible_if=lambda: ("sangen" in store.allies) or store.mizuna_rescued,
-            req=lambda: skill_check("negotiation", 5),
-            req_text="交渉5で解放"),
+            req=lambda: (skill_check("negotiation", 5)
+                         or (store.mahjong_played and skill_check("negotiation", 4))),
+            req_text="交渉5で解放(卓を囲んだ後なら交渉4)"),
         InvestigationEvent(
             "ev_ally_gilt", "銀の黄昏教団と接触する", "ev_ally_gilt",
             min_day=1,
             visible_if=lambda: _done("ev_yuki3") or _done("ev_sign1"),
-            req=lambda: skill_check("negotiation", 5),
-            req_text="交渉5で解放"),
+            req=lambda: (skill_check("negotiation", 5)
+                         or ((_done("ev_yuki3") or store.alissa_answer == "kind")
+                             and skill_check("negotiation", 4))),
+            req_text="交渉5で解放(事故の真相 か アリッサとの縁があれば交渉4)"),
         InvestigationEvent(
             "ev_ally_bab", "伊藤茂信の失脚工作——バベッジの糸を切る", "ev_ally_bab",
             requires=("ev_endo3",),
             req=lambda: skill_check("negotiation", 5) or skill_check("investigation", 5),
             req_text="交渉5 か 探索5で解放"),
+
+        ## ---- サブイベント(企画書 2026-07-13) ----
+        InvestigationEvent(
+            "ev_concert", "東京駅のクリスマスコンサートへ(雪と)", "ev_concert",
+            dates=("12月25日(日)",), slots=("夕方",)),
+        InvestigationEvent(
+            "ev_hood_girl", "大学の一般公開を見て回る", "ev_hood_girl",
+            dates=("12月25日(日)",), slots=("昼",)),
+        InvestigationEvent(
+            "ev_stream", "ニャルニャル動画で礼拝の配信を視る", "ev_stream",
+            dates=("12月23日(金)", "12月24日(土)"), slots=("夜",)),
+        InvestigationEvent(
+            "ev_park_rally", "哲学堂公園の集会を覗く", "ev_park_rally",
+            dates=("12月23日(金)",), slots=("夕方",)),
+        InvestigationEvent(
+            "ev_victims_group", "「被害者の会」を訪ねる", "ev_victims_group",
+            requires=("ev_yuki1",)),
+        InvestigationEvent(
+            "ev_cat", "高山研究室の猫と過ごす(時間は経たない)", "ev_cat",
+            repeatable=True,
+            visible_if=lambda: store.cat_day != store.day_index),
+
+        ## ---- 交流イベント(企画書 2026-07-13。夜の行動枠1消費が基本) ----
+        InvestigationEvent(
+            "ev_bond_mizuna", "瑞名と事務所で一杯やる", "ev_bond_mizuna",
+            slots=("夜",),
+            visible_if=lambda: store.mizuna_rescued),
+        InvestigationEvent(
+            "ev_bond_yuki", "雪と冬の買い物に出る", "ev_bond_yuki",
+            slots=("夕方", "夜"),
+            visible_if=lambda: store.yuki_protected),
+        InvestigationEvent(
+            "ev_bond_riku", "凛久と屋上で星を見る", "ev_bond_riku",
+            slots=("夜",),
+            visible_if=lambda: store.flag_f3_rikuhisa_saved),
+        InvestigationEvent(
+            "ev_bond_kumi", "久美に稽古をつけてもらう", "ev_bond_kumi",
+            slots=("夜",),
+            visible_if=lambda: "kumi" in store.allies),
+        InvestigationEvent(
+            "ev_bond_emilia", "閉店後の「雪国」に寄る", "ev_bond_emilia",
+            slots=("夜",), requires=("ev_yuki3",)),
+        InvestigationEvent(
+            "ev_bond_mahjong", "山蓮界で卓を囲む", "ev_bond_mahjong",
+            slots=("夜",),
+            visible_if=lambda: ("sangen" in store.allies) or store.mizuna_rescued),
+        InvestigationEvent(
+            "ev_bond_yasuda", "安田刑事と屋台で落ち合う", "ev_bond_yasuda",
+            slots=("夜",),
+            visible_if=lambda: "gov" in store.allies),
+        InvestigationEvent(
+            "ev_bond_alissa", "銀髪の女の“手当て”を受ける", "ev_bond_alissa",
+            min_day=1,
+            visible_if=lambda: (_done("ev_yuki3") or _done("ev_sign1"))
+                               and ("gilt" not in store.allies)),
+        InvestigationEvent(
+            "ev_bond_sakuya", "大学のベンチで一息つく", "ev_bond_sakuya",
+            dates=("12月26日(月)", "12月27日(火)"), slots=("昼",)),
 
         ## ---- 育成コマンド(繰り返し可) ----
         InvestigationEvent(
@@ -311,6 +373,12 @@ init python:
             "ev_rest", "休息をとる(SAN回復)", "ev_rest",
             repeatable=True),
     ]
+
+    ## 行動枠を消費しないイベント(選んでも時間が進まない)
+    ZERO_COST_EVENTS = { "ev_cat" }
+
+    ## 育成・休息コマンド(独5「トートの栞」の行き詰まり検知対象)
+    GRIND_EVENTS = { "ev_library", "ev_kikikomi", "ev_office", "ev_training", "ev_rest" }
 
     def get_event(event_id):
         for ev in EVENTS:
@@ -454,7 +522,28 @@ label calendar_hub:
 
     call expression event_label(picked_event) from _call_investigation_event
 
+    ## 行動枠を消費しないイベント(サ2 高山の猫)はここで折り返す
+    if picked_event in ZERO_COST_EVENTS:
+        jump calendar_hub
+
+    $ prev_day = day_index
     $ finish_event(picked_event)
+
+    ## 育成・休息の連打を検知(独5「トートの栞」の行き詰まり判定)
+    python:
+        if picked_event in GRIND_EVENTS:
+            grind_streak += 1
+        else:
+            grind_streak = 0
+
+    ## 日付が変わったら、終わった日の幕間(夜のニュース等)を自動で挟む
+    if (not calendar_finished()) and day_index == prev_day + 1:
+        call interlude_night(prev_day) from _call_interlude_night
+
+    ## 行き詰まっていれば、古崎堂からの「栞」が届く(独5・枠消費なし)
+    if grind_streak >= 4 and toto_hint_day != day_index and not calendar_finished():
+        $ toto_hint_day = day_index
+        call ev_toto_hint from _call_toto_hint
 
     jump calendar_hub
 
@@ -471,7 +560,7 @@ label calendar_day_brief:
 
         "「――昨日中野区で発生したガス爆発は、死者9名、負傷者多数。警察は事故と事件の両面で捜査を……」"
 
-        "そして、瑞名慧と連絡が取れない。昨日「警視庁で面談がある」と言っていたきり、電話は留守電に繋がるだけだ。"
+        "そして朝方、瑞名から短い電話があった。「“郷大和”って男に警視庁へ呼ばれてる。調べ物を片付けたら、昼過ぎに顔を出してくる」——妙に、歯切れが悪かった。"
 
         "（……嫌な予感がする。だが今は、[first_person]にできることをやるしかない）"
 
@@ -480,6 +569,8 @@ label calendar_day_brief:
         "◆ 12月24日(土) 朝のニュース"
 
         "「――昨日15時30分頃、警視庁で爆発が発生。テロの可能性が高いと見られています。また、今朝未明には渋谷区の住宅街で火災があり、住宅1棟が全焼……」"
+
+        "瑞名とは、あれきり連絡が取れない。昨日の昼、警視庁に入ったのを最後に。——調べてみれば、“郷大和”という職員は、警視庁のどこにも存在しなかった。"
 
         if "ev_yuki2" in events_done:
             "映像に映る焼け跡は――東風谷家だ。昨日のうちに調べておいて、本当に良かった。"
@@ -492,7 +583,7 @@ label calendar_day_brief:
 
         "◆ 12月25日(日) クリスマス"
 
-        "「――本日、光山大学では創立60周年の一般記念公開が行われます。また品川の大聖堂では、大規模な礼拝が予定されており……」"
+        "「――本日、光山大学では創立60周年の一般記念公開が行われます。また品川の教会では、ナイ牧師による大規模な礼拝が予定されており……」"
 
         "浮かれた街の空気の下で、何かが静かに進行している。"
 
@@ -500,7 +591,7 @@ label calendar_day_brief:
             "（光山大学の一般公開……電子工学部の発表代表は“遠藤菫”。彼女に接触するなら、今日の昼が好機だ）"
 
         if invitation and not personal_sign_removed:
-            "（そして今夜22時、品川で“特別な説法”。……招待状は、ポケットの中にある）"
+            "（そして今夜20時、品川教会で“特別な説法”。……招待状は、ポケットの中にある）"
 
     elif day_index == 3:
 

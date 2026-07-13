@@ -1,0 +1,165 @@
+## 幕間(企画書2026-07-13: 幕1〜5・独5) — 各日の最後の行動枠が終わった夜に
+## calendar.rpy から自動で呼ばれる。行動枠は消費しない。
+##
+## 設計方針(企画書): 幕間は「平地」。抑制した淡々とした筆致で置き、
+## 12/28〜29の山を高くするための土台とする。感情を名指さない。
+##
+## ended_day: 終わった日のインデックス(0=12/23 … 5=12/28)
+
+label interlude_night(ended_day):
+
+    scene bg black
+    with dissolve
+
+    "◆ その夜"
+
+    ## ---- 幕3〔正典再現〕夜のニュース(毎晩) ----
+    ## 通り魔の場所・時刻は資料「暗殺対象リスト(SAN48)」の予定表と一致させてある。
+    ## 被害者の実名は正典テキスト(17.ニュース内容.txt)未入手のため出さない。
+
+    if ended_day == 0:
+        "「――本日夜、新橋と品川で相次いで通り魔事件が発生しました。警視庁の爆発との関連は不明です」"
+        "「また、今月22日に都内のホテル火災で死亡した会社役員・田井中政文さんについて、警察は失火と断定……」"
+    elif ended_day == 1:
+        "「――クリスマスイブの今日、お台場と上野で通り魔事件が相次ぎました。いずれも犯人は逃走中……」"
+    elif ended_day == 2:
+        "「――本日13時頃、新木場で刃物による殺傷事件。光山大学は記念公開の中止を発表しました」"
+        "「品川の教会には、礼拝に大勢の人が詰めかけ……」"
+    elif ended_day == 3:
+        "「――今朝9時、渋谷で通り魔事件。連続する事件に、警察は関連を調べています」"
+    elif ended_day == 4:
+        "「――本日、新宿と代々木で通り魔事件が2件。同一犯の可能性も視野に……」"
+    elif ended_day == 5:
+        "「――今日14時頃、青山で通り魔事件が発生。年の瀬の東京を、連続通り魔の影が覆っています」"
+
+    ## 資料庫に暗殺予定表があれば、突合の一拍(casebook連携の簡易版)
+    if "assassin_list" in archive_items:
+        "（――場所も、時刻も。あの“予定表”の通りだ）"
+
+    ## ---- 幕1〔空白補完〕凛久のカウントダウン(12/23・25・27の夜) ----
+    if ended_day in (0, 2, 4) and not riku_rescued:
+
+        scene bg apartment
+        with dissolve
+
+        if ended_day == 0 and "maku1_1" not in interludes_seen:
+            $ interludes_seen.add("maku1_1")
+            "――中西アパート、地下。"
+            rikuhisa "《内側に存在するこの世界を、外宇宙へ、あるべき場所へ》"
+            "唱和の合間、少女はふと膝の上で指を動かした。見えない鍵を、押さえるように。"
+            rikuhisa "……ドの次の、半音上の音。どの指だったっけ。"
+            "誰も答えない部屋で、指はしばらく迷ってから、止まった。"
+
+        elif ended_day == 2 and "maku1_2" not in interludes_seen:
+            $ interludes_seen.add("maku1_2")
+            "――中西アパート、地下。"
+            "少女は、金色の何かを受け取った日のことを思い出そうとしていた。壇上。拍手。隣に、誰かがいた。"
+            rikuhisa "……誰、だっけ。"
+            "拍手の音だけが残って、隣の顔は、もう出てこなかった。"
+
+        elif ended_day == 4 and "maku1_3" not in interludes_seen:
+            $ interludes_seen.add("maku1_3")
+            "――中西アパート、地下。"
+            "その夜、少女は課題の紙の隅に、自分の名前を書いた。"
+            rikuhisa "間宮、凛久。"
+            "書けた。まだ、書けた。それがどうしてか、確認せずにはいられなかった。"
+
+    ## ---- 幕2〔正典再現〕墓前の遠藤啓介(12/24・27の夜。決着後は流れない) ----
+    ## 台詞は二重設計: 初見では「亡き妻を悼む男」、真相(楓=IDE2.0開発者・
+    ## 「先にセラエノへ旅立った」という啓介の解釈)を知った後に意味が反転する。
+    if ended_day in (1, 4) and not (flag_f5_endo_stopped or flag_endo_route):
+
+        scene bg grave
+        with dissolve
+
+        if ended_day == 1 and "maku2_1" not in interludes_seen:
+            $ interludes_seen.add("maku2_1")
+            "――20時。江戸川の墓地に、コートの男がひとり。"
+            endo "今日は、菫の好きだった花屋が閉まっていてね。駅前ので済まない。"
+            endo "そちらは、どうだ。……いや、愚問か。おまえは昔から、待つのだけは得意だった。"
+            "男は長いこと手を合わせ、来た時と同じ静けさで、闇へ戻っていった。"
+
+        elif ended_day == 4 and "maku2_2" not in interludes_seen:
+            $ interludes_seen.add("maku2_2")
+            "――20時。同じ墓の前に、同じ男。"
+            endo "7ページ目の、おまえの字が読めなくてね。三日悩んだよ。……ああ、もう解けた。"
+            endo "おまえはいつも、私より一歩だけ先にいる。"
+            "供えられた花は、今夜も新しかった。"
+
+    ## ---- 幕4〔空白補完〕咲耶のステージ(12/26の夜・一度のみ) ----
+    if ended_day == 3 and "maku4" not in interludes_seen:
+        $ interludes_seen.add("maku4")
+
+        scene bg black
+        with dissolve
+
+        "――動画サイト、急上昇1位。聖歌隊めいた衣装の少女たちが、クリスマス曲を歌っている。"
+        "センターの少女の笑顔は、完璧だった。今朝9時、渋谷で人がひとり死んでいる。"
+        "コメント欄は「天使」の一色で流れていく。"
+        $ san48_seen = True
+
+    ## ---- 幕5〔空白補完〕品川教会の地下(12/25の夜・一度のみ) ----
+    if ended_day == 2 and "maku5" not in interludes_seen:
+        $ interludes_seen.add("maku5")
+
+        scene bg church
+        with dissolve
+
+        "――品川教会、地下。礼拝の熱がまだ残る石段の下、窓のない部屋。"
+        "ナイ牧師は、目を閉じて座っていた。眠ってはいない。"
+        "やがて、一度だけ口を開いた。"
+        "「——あと、四日」"
+        "それきり、地下は元の静けさに戻った。"
+
+    scene bg black
+    with dissolve
+
+    return
+
+
+## ---- 独5「トートの栞」——ヒント機能の世界内化 ----
+## 育成・休息だけで行動枠を潰し続けた時(行き詰まり)にだけ、古崎堂の宇川真一が
+## 本を先回りして寄越す。メタ的な語りは禁止——あくまで探索者への助言として。
+
+init python:
+
+    def toto_hint_text():
+        """現在の進行から、次の一歩への示唆(本の題名と添え書き)を返す。"""
+        d = store.events_done
+        if "ev_yuki1" not in d:
+            return ("『人捜しの基礎』", "足取りは、名前から辿るものだ。")
+        if ("ev_yuki2" not in d) and ("ev_yuki2b" not in d):
+            return ("『家宅の記憶』", "家は、住人よりも多くを覚えている。急ぐことだ。")
+        if "ev_yuki3" not in d:
+            return ("『夜の酒場の人類学』", "雪の名を冠した店がある。母親の連絡帳を思い出したまえ。")
+        if "ev_yuki4" not in d:
+            return ("『後見人の義務について』", "依頼の糸を、上へ上へと辿ってみることだ。")
+        if "ev_yuki5" not in d:
+            return ("『中野区の廃墟建築』", "長江ビル。回収部隊より先に着くことだ。")
+        if not store.sign_known:
+            return ("『印と地脈』", "君の右手の甲を、私は前から気に入っていてね。")
+        if "ev_riku1" not in d and not store.riku_rescued:
+            return ("『監禁と搬送の経路学』", "もうひとりの少女は、まだ動かせる距離にいる。")
+        if "ev_endo1" not in d:
+            return ("『経歴の作り方』", "後任者というものは、時に前任者よりも雄弁だ。")
+        if not store.lens_located:
+            return ("『月と鏡の博物誌』", "レンズの在処は、集めた紙の中にもう書いてある。")
+        return ("『備えの書』", "知は足りている。あとは、人手と度胸の問題だ。")
+
+
+label ev_toto_hint:
+
+    scene bg black
+    with dissolve
+
+    "拠点に戻ると、郵便受けに古書店の包みが挟まっていた。差出人の名はない。"
+
+    $ toto_book, toto_note = toto_hint_text()
+
+    "包みの中身は一冊の古書——[toto_book]。栞代わりの紙片に、癖のある字が躍っている。"
+
+    "「探しているのは、これだろう。[toto_note]　——古崎堂」"
+
+    "（……あの店主、どこまで“視えて”いるんだ）"
+
+    return
